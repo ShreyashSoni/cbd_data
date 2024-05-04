@@ -1,7 +1,7 @@
 from pathlib import Path
 from subprocess import CalledProcessError
-from cybulde.utils.utils import get_logger, run_shell_command
 
+from cybulde.utils.utils import get_logger, run_shell_command
 
 DATA_UTILS_LOGGER = get_logger(Path(__file__).name)
 
@@ -14,7 +14,7 @@ def initialize_dvc() -> None:
     if is_dvc_initialized():
         DATA_UTILS_LOGGER.info("DVC is already initialized.")
         return
-    
+
     DATA_UTILS_LOGGER.info("Initializing DVC")
     run_shell_command("dvc init")
     run_shell_command("dvc config core.analytics false")
@@ -33,7 +33,7 @@ def initialize_dvc_storage(dvc_remote_name: str, dvc_remote_url: str) -> None:
         DATA_UTILS_LOGGER.info("DVC storage was already initialized...")
 
 
-def commit_to_dvc(dvc_raw_data_folder: str, dvc_remote_name:str) -> None:
+def commit_to_dvc(dvc_raw_data_folder: str, dvc_remote_name: str) -> None:
     current_version = run_shell_command("git tag --list | sort -t v -k 2 -g | tail -1 | sed 's/v//'").strip()
     if not current_version:
         current_version = "0"
